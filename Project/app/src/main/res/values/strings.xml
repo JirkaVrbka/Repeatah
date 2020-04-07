@@ -1,5 +1,21 @@
 <resources>
     <string name="app_name">Repeatah</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <string name="tab_text_1">Testy</string>
+    <string name="tab_text_2">Štatistiky</string>
+
+    <string name="topics_label">Moje Témy</string>
+    <string name="num_of_drills">Počet testov: %1$d</string>
+
+    <string name="drills_label">Moje Testy</string>
+    <string name="num_of_questions">Počet otázok: %1$d</string>
+
+    <string name="settings">Nastavenia</string>
+
+    <string name="time">Čas:</string>
+    <string name="points">Body: %1$d</string>
+    <string name="next">Ďalej</string>
+
+
 </resources>
