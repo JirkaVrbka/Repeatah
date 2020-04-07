@@ -21,6 +21,7 @@ class DrillActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_drill)
 
+        
         //Get Drill from DrillPickerActivity
         val drill : Drill = intent.extras?.getParcelable(ARG_DRILL) ?: Drill()
 
