@@ -64,7 +64,6 @@
 
             android:tooltipText="0/0"
             android:isIndicator="true"
-
             />
 
         <TextView
@@ -82,7 +81,8 @@
             android:layout_width = "match_parent"
             android:layout_height = "200dip"
             app:seriesData="0=5;2=5;3=0;4=2"
-            android:id = "@+id/graph" />
+            android:id = "@+id/graph"
+            />
 
     </LinearLayout>
 
