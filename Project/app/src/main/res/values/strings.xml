@@ -16,6 +16,7 @@
     <string name="time">Čas:</string>
     <string name="points">Body: %1$d</string>
     <string name="next">Ďalej</string>
+    <string name="daily_reminder_switch_name">Daily reminder</string>
 
 
 </resources>

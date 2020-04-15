@@ -2,7 +2,10 @@ package cz.muni.fi.pv239.repeatah.settings
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
+import android.widget.Switch
+import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 import cz.muni.fi.pv239.repeatah.main.MainActivity
@@ -16,10 +19,10 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.settings, SettingsFragment())
-            .commit()
+//        supportFragmentManager
+//            .beginTransaction()
+//            .replace(R.id.settings, SettingsFragment())
+//            .commit()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         //Redirect back to MainActivity
@@ -34,5 +37,17 @@ class SettingsActivity : AppCompatActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
         }
+    }
+
+    fun timePickerOnClick(view: View) {
+        val switch = view.findViewById<Switch>(R.id.reminder_enabled_switch)
+        val timePicker = view.rootView.findViewById<TimePicker>(R.id.reminder_time_picker)
+
+        if (switch.isChecked){
+            timePicker.visibility = View.VISIBLE
+        }else{
+            timePicker.visibility = View.GONE
+        }
+
     }
 }
