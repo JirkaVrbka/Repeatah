@@ -19,6 +19,10 @@
     <string name="daily_reminder_switch_name">Daily reminder</string>
     <string name="show_answers_after_test">Show answers after test</string>
     <string name="statistics">Statistics</string>
+    <string name="statistics_correctness">Average correctness</string>
+    <string name="statistics_average_speed">Average speed</string>
+    <string name="statistics_average_points">Average points</string>
+    <string name="statistics_progress">Progress</string>
 
 
 </resources>
