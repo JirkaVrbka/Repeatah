@@ -63,6 +63,21 @@
         android:orientation="vertical">
 
         <Switch
+            android:text="@string/show_answers_after_test"
+            android:id="@+id/answers_enabled_switch"
+            android:textSize="25sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="16dp"
+
+            android:checked="true"
+            android:onClick="timePickerOnClick"
+            />
+
+        <Switch
             android:text="@string/daily_reminder_switch_name"
             android:id="@+id/reminder_enabled_switch"
             android:textSize="25sp"
@@ -86,6 +101,8 @@
             android:layout_marginEnd="32dp"
             android:layout_marginTop="16dp"
             />
+
+
 
     </LinearLayout>
 
