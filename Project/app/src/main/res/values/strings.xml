@@ -17,6 +17,8 @@
     <string name="points">Body: %1$d</string>
     <string name="next">Ďalej</string>
     <string name="daily_reminder_switch_name">Daily reminder</string>
+    <string name="show_answers_after_test">Show answers after test</string>
+    <string name="statistics">Statistics</string>
 
 
 </resources>
