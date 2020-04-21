@@ -1,6 +1,9 @@
 package cz.muni.fi.pv239.repeatah.model
 
 import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import cz.muni.fi.pv239.repeatah.R
 import kotlinx.android.parcel.Parcelize
 
@@ -8,20 +11,25 @@ import kotlinx.android.parcel.Parcelize
  * Class that represents a Topic of a Drill
  * Is Parcelable, so that a Topic object could be put into Intent and passed to another Activity
  */
+@Entity(tableName = "topics")
 @Parcelize
 data class Topic (
     //ID for identifying in Database
-    val id : Int = 0,
+    @PrimaryKey
+    @ColumnInfo(name = "topic_id") val topicId : Int,
 
     //Topics' name
-    val name: String = "Téma",
+    @ColumnInfo(name = "name") val name: String,
+
+    /*
     //Stores IDs of its Drills
-    val drills : MutableList<Int> = mutableListOf(),
+    @ColumnInfo(name = "drill_id") val drills : MutableList<Int> = mutableListOf(),
+    */
 
     //Topics' icon
-    val icon : Int = R.drawable.ic_work_white_24dp,
+    @ColumnInfo(name = "icon") val icon : Int,
     //Topics' background colour
-    val colour : Int = R.color.colorAccent,
+    @ColumnInfo(name = "colour") val colour : Int,
     //Topic icons' background
-    val background : Int = R.drawable.background_red_ic_topic
+    @ColumnInfo(name = "background") val background : Int
 ) :Parcelable

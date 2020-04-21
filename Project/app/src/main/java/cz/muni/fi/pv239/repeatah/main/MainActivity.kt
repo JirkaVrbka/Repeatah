@@ -1,13 +1,19 @@
 package cz.muni.fi.pv239.repeatah.main
 
+import android.content.Context
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
 import cz.muni.fi.pv239.repeatah.R
+import cz.muni.fi.pv239.repeatah.database.DrillRoomDatabase
 import cz.muni.fi.pv239.repeatah.settings.SettingsActivity
+import cz.muni.fi.pv239.repeatah.web.ConnectionChecker
 
 /**
  * Main Activity

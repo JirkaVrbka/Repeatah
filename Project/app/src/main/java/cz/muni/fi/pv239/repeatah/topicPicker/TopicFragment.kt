@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import cz.muni.fi.pv239.repeatah.R
+import cz.muni.fi.pv239.repeatah.database.DrillRoomDatabase
+import cz.muni.fi.pv239.repeatah.model.transaction.TopicWithDrills
 import kotlinx.android.synthetic.main.fragment_topics.view.*
 
 
@@ -19,8 +21,6 @@ import kotlinx.android.synthetic.main.fragment_topics.view.*
  */
 class TopicFragment : Fragment() {
 
-    //Create RecyclesViews' Adapter
-    private val adapter = TopicAdapter(/*getTopics()*/)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,6 +29,14 @@ class TopicFragment : Fragment() {
     ): View? =
         // Inflate the layout for this fragment
         inflater.inflate(R.layout.fragment_topics, container, false).apply {
+
+            //Get Database
+            val database : DrillRoomDatabase? = context?.let { DrillRoomDatabase.getDatabase(it) }
+            val topics = database?.TopicDao()?.getTopicsWithDrills()
+
+            //Create RecyclesViews' Adapter
+            val adapter = TopicAdapter(topics)
+
             // Add layout
             topic_recycler_view.layoutManager = LinearLayoutManager(context)
 
@@ -41,9 +49,4 @@ class TopicFragment : Fragment() {
             // Add adapter
             topic_recycler_view.adapter = adapter
         }
-
-    //TODO Function for getting Topic objects from Database
-    fun getTopics(){
-        return
-    }
 }
