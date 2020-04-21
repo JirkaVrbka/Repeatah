@@ -16,15 +16,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/statistics_correctness"
-            android:textSize="25sp"
+            android:textSize="24sp"
             android:textColor="@color/colorBlack"
             android:gravity="center"
-            android:layout_marginTop="25sp"
+            android:layout_marginTop="16dp"
             />
         <RatingBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="8dp"
 
             android:tooltipText="0/0"
             android:isIndicator="true"
@@ -34,15 +35,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/statistics_average_speed"
-            android:textSize="25sp"
+            android:textSize="24sp"
             android:textColor="@color/colorBlack"
             android:gravity="center"
-            android:layout_marginTop="25sp"
+            android:layout_marginTop="8dp"
             />
         <RatingBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="8dp"
 
             android:tooltipText="0/0"
             android:isIndicator="true"
@@ -52,15 +54,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/statistics_average_points"
-            android:textSize="25sp"
+            android:textSize="24sp"
             android:textColor="@color/colorBlack"
             android:gravity="center"
-            android:layout_marginTop="25sp"
+            android:layout_marginTop="8dp"
             />
         <RatingBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="8dp"
 
             android:tooltipText="0/0"
             android:isIndicator="true"
@@ -70,16 +73,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/statistics_progress"
-            android:textSize="25sp"
+            android:textSize="24sp"
             android:textColor="@color/colorBlack"
             android:gravity="center"
-            android:layout_marginTop="25sp"
+            android:layout_marginTop="8dp"
             />
 
 
         <com.jjoe64.graphview.GraphView
             android:layout_width = "match_parent"
             android:layout_height = "200dip"
+
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+
             app:seriesData="0=5;2=5;3=0;4=2"
             android:id = "@+id/graph"
             />

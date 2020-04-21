@@ -17,7 +17,15 @@
     <string name="points">Body: %1$d</string>
     <string name="next">Dále</string>
 
-    <string name="welcome">Čau lidi!</string>
+    <string name="daily_reminder_switch_name">Denná připomínka</string>
+    <string name="show_answers_after_test">Zobrazit odpovědi po dokončení testu</string>
+    <string name="statistics">Statistiky</string>
+    <string name="statistics_correctness">Průměrná správnost odpovědí</string>
+    <string name="statistics_average_speed">Průměrná rychlost</string>
+    <string name="statistics_average_points">Průměrné skóre</string>
+    <string name="statistics_progress">Progres</string>
+
+    <string name="welcome">Vítejte!</string>
     <string name="welcome_message">Nastavuje se prostředí.\nPočkejte prosím.</string>
 
 </resources>

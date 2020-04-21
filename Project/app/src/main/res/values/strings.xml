@@ -16,13 +16,14 @@
     <string name="time">Čas:</string>
     <string name="points">Body: %1$d</string>
     <string name="next">Ďalej</string>
-    <string name="daily_reminder_switch_name">Daily reminder</string>
-    <string name="show_answers_after_test">Show answers after test</string>
-    <string name="statistics">Statistics</string>
-    <string name="statistics_correctness">Average correctness</string>
-    <string name="statistics_average_speed">Average speed</string>
-    <string name="statistics_average_points">Average points</string>
-    <string name="statistics_progress">Progress</string>
+
+    <string name="daily_reminder_switch_name">Denná pripomienka</string>
+    <string name="show_answers_after_test">Zobraziť odpovede po dokončení testu</string>
+    <string name="statistics">Štatistiky</string>
+    <string name="statistics_correctness">Priemerná správnosť odpovedí</string>
+    <string name="statistics_average_speed">Priemerná rýchlosť</string>
+    <string name="statistics_average_points">Priemerné skóre</string>
+    <string name="statistics_progress">Progres</string>
 
     <string name="welcome">Vitajte!</string>
     <string name="welcome_message">Nastavuje sa prostredie.\nPočkajte prosím.</string>
