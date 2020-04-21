@@ -23,22 +23,7 @@ private const val ARG_DRILL = "Drill"
 /**
  * Fragment for Answering a Question
  */
-class QuestionFragment(drillId : Int): Fragment() {
-
-    private val database : DrillRoomDatabase? = context?.let { DrillRoomDatabase.getDatabase(it) }
-    private val drillWithQuestions = database?.DrillDao()?.getDrillWithQuestionsById(drillId)
-
-    //
-    private var questionPosition = 0
-    private var points = 0
-
-    //Just for testing
-    private var answerPosition : ArrayList<Int> = arrayListOf(0, 1, 2, 3)
-
-   private val questions : List<QuestionWithAnswers>? = getQuestions()
-
-    private var answers : List<Answer>? = getAnswers(questionPosition)
-   // private var answerPosition = shuffleAnswers()
+class QuestionFragment(val drillId : Int): Fragment() {
 
     @SuppressLint("ResourceAsColor")
     override fun onCreateView(
@@ -46,12 +31,38 @@ class QuestionFragment(drillId : Int): Fragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_question, container, false).apply {
 
+        // Position in a List of QuestionsWithAnswers
+        var questionPosition = 0
+        // User's score
+        var score = 0
+
+        val database : DrillRoomDatabase? = context?.let { DrillRoomDatabase.getDatabase(it) }
+        val drillWithQuestions = database?.DrillDao()?.getDrillWithQuestionsById(drillId)
+
+        val questions : List<QuestionWithAnswers>? = database?.QuestionDao()?.getQuestionsWithAnswers(drillId)
+        var answers : List<Answer>? = questions?.get(questionPosition)?.answers
+
+        //TODO: Function for shuffling Answer positions
+        fun shuffleAnswers(){
+            return
+        }
+
+        //TODO: Function for shuffling Question positions
+        fun shuffleQuestions(){
+            return
+        }
+
+        //Just for testing
+        var answerPosition : ArrayList<Int> = arrayListOf(0, 1, 2, 3)
+
+        // Position in a list of Answers
+        // private var answerPosition = shuffleAnswers()
+
         //Set ProgressBar progress
         question_progressBar.progress = (100 / (questions?.size ?: 1)) * (questionPosition + 1)
         //TODO: Repair setting of ProgressBar colour
         //Set ProgressBar colour
         drillWithQuestions?.drill?.colour?.let { question_progressBar.progressDrawable.setTint(it) }
-
 
         //Set Question text
         question_text_text_view.text = questions?.get(questionPosition)?.question?.text
@@ -66,7 +77,7 @@ class QuestionFragment(drillId : Int): Fragment() {
         question_answer_four_button.text = answers?.get(answerPosition[3])?.text
 
         //Set points
-        question_points_text_view.text = context.getString(R.string.points, points)
+        question_points_text_view.text = context.getString(R.string.points, score)
         //Start time
         question_time_chronometer.start()
 
@@ -74,23 +85,5 @@ class QuestionFragment(drillId : Int): Fragment() {
         //Set NextButton background colour
         drillWithQuestions?.drill?.colour?.let { question_next_button.background.setTint(it) }
 
-    }
-
-    fun getQuestions(): List<QuestionWithAnswers>? {
-        return database?.QuestionDao()?.getQuestionsWithAnswers()
-    }
-
-    fun getAnswers(position : Int): List<Answer>? {
-        return questions?.get(position)?.answers
-    }
-
-    //TODO: Function for shuffling Answer positions
-    fun shuffleAnswers(){
-        return
-    }
-
-    //TODO: Function for shuffling Question positions
-    fun shuffleQuestions(){
-        return
     }
 }

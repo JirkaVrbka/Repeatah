@@ -29,6 +29,9 @@ class DrillPickerAdapter(private val icon : Int , private val drills : List<Dril
 
     override fun getItemCount(): Int = drills.size
 
+    /**
+     * Custom ViewHolder
+     */
     inner class DrillViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(drillWithQuestions: DrillWithQuestions){
             //Set Drill name
@@ -40,6 +43,7 @@ class DrillPickerAdapter(private val icon : Int , private val drills : List<Dril
             //Set icon background
             view.drill_icon_image_view.setBackgroundResource(drillWithQuestions.drill.background)
 
+            //Change Activity on Item pick
             itemView.setOnClickListener{
                 val bundle = Bundle()
                 bundle.putParcelable(DrillActivity.ARG_DRILL, drillWithQuestions.drill)

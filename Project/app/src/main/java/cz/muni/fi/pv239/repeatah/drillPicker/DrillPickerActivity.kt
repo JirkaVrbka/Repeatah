@@ -21,8 +21,6 @@ import kotlinx.android.synthetic.main.activity_drill_picker.*
  */
 class DrillPickerActivity : AppCompatActivity() {
 
-    private val database : DrillRoomDatabase = DrillRoomDatabase.getDatabase(this)
-
     companion object{
         //Used in Intent to get a Topic from MainActivity
         const val ARG_TOPIC = "Topic"
@@ -32,6 +30,8 @@ class DrillPickerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_drill_picker)
+
+        val database : DrillRoomDatabase = DrillRoomDatabase.getDatabase(this)
 
         //Get Topic from MainActivity
         val topic : Topic? = intent.extras?.getParcelable(ARG_TOPIC)

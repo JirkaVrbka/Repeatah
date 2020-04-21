@@ -43,6 +43,7 @@ class DrillActivity : AppCompatActivity() {
         drill_cancel_image_button.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivityIfNeeded(intent, 0)
+            finish()
         }
     }
 }

@@ -21,11 +21,6 @@ import kotlinx.android.synthetic.main.fragment_topics.view.*
  */
 class TopicFragment : Fragment() {
 
-    //Get Database
-    private val database : DrillRoomDatabase? = context?.let { DrillRoomDatabase.getDatabase(it) }
-
-    //Create RecyclesViews' Adapter
-    private val adapter = TopicAdapter(getTopics())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +29,14 @@ class TopicFragment : Fragment() {
     ): View? =
         // Inflate the layout for this fragment
         inflater.inflate(R.layout.fragment_topics, container, false).apply {
+
+            //Get Database
+            val database : DrillRoomDatabase? = context?.let { DrillRoomDatabase.getDatabase(it) }
+            val topics = database?.TopicDao()?.getTopicsWithDrills()
+
+            //Create RecyclesViews' Adapter
+            val adapter = TopicAdapter(topics)
+
             // Add layout
             topic_recycler_view.layoutManager = LinearLayoutManager(context)
 
@@ -46,8 +49,4 @@ class TopicFragment : Fragment() {
             // Add adapter
             topic_recycler_view.adapter = adapter
         }
-
-    private fun getTopics(): List<TopicWithDrills>? {
-        return database?.TopicDao()?.getTopicsWithDrills()
-    }
 }

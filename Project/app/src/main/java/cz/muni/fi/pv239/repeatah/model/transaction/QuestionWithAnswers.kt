@@ -6,6 +6,9 @@ import androidx.room.Transaction
 import cz.muni.fi.pv239.repeatah.model.Answer
 import cz.muni.fi.pv239.repeatah.model.Question
 
+/**
+ * Transaction class for joining Question with its Answers
+ */
 data class QuestionWithAnswers (
     @Embedded val question : Question,
     @Relation(

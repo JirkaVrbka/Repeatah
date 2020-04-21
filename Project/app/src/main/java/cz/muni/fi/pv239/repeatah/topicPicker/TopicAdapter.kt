@@ -2,6 +2,7 @@ package cz.muni.fi.pv239.repeatah.topicPicker
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,9 +28,13 @@ class TopicAdapter(private val topics : List<TopicWithDrills>?): RecyclerView.Ad
         holder.bind(topics?.get(position))
     }
 
+    /**
+     * Custom ViewHolder
+     */
     inner class TestViewHolder(val view: View): RecyclerView.ViewHolder(view) {
 
         fun bind(topicWithDrills : TopicWithDrills?){
+
             //Show Topic name
             view.topic_name_text_view.text = topicWithDrills?.topic?.name
             //Show String resource + number of Drills in each Topic

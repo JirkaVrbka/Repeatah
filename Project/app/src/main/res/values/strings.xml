@@ -17,5 +17,8 @@
     <string name="points">Body: %1$d</string>
     <string name="next">Ďalej</string>
 
+    <string name="welcome">Vitajte!</string>
+    <string name="welcome_message">Nastavuje sa prostredie.\nPočkajte prosím.</string>
+
 
 </resources>
