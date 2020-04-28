@@ -16,6 +16,8 @@
     <string name="time">Čas:</string>
     <string name="points">Body: %1$d</string>
     <string name="next">Dále</string>
+    <string name="endDrill">Ukončit test</string>
+    <string name="chooseAnswer">Prosím vyberte odpověď</string>
 
     <string name="daily_reminder_switch_name">Denná připomínka</string>
     <string name="show_answers_after_test">Zobrazit odpovědi po dokončení testu</string>
