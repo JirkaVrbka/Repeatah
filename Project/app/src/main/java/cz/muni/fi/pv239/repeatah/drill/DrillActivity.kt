@@ -3,6 +3,7 @@ package cz.muni.fi.pv239.repeatah.drill
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import cz.muni.fi.pv239.repeatah.R
 import cz.muni.fi.pv239.repeatah.main.MainActivity
 import cz.muni.fi.pv239.repeatah.model.Drill
@@ -24,6 +25,20 @@ class DrillActivity : AppCompatActivity() {
         //Get Drill from DrillPickerActivity
         val drill : Drill? = intent.extras?.getParcelable(ARG_DRILL)
 
+        //TODO: Repair positive and negative button positions
+        //Create AlertDialog in case of quitting the Drill
+        val alertDialog = AlertDialog.Builder(this, R.style.AlertDialogStyle_Drill)
+            .setView(R.layout.dialog_alert_end_drill)
+            //Positive Button dismisses the Dialog
+            .setPositiveButton(R.string.continueString) { dialog, which ->  dialog.dismiss() }
+            //Negative Button redirects user to MainActivity
+            .setNegativeButton(R.string.endString) { dialog, which ->
+                val intent = Intent(this, MainActivity::class.java)
+                startActivityIfNeeded(intent, 0)
+                finish()
+            }
+            .create()
+
         //Set up QuestionFragment
         val questionFragment = drill?.id?.let { QuestionFragment(it) }
         questionFragment?.let {
@@ -39,11 +54,9 @@ class DrillActivity : AppCompatActivity() {
         //Set CancelButton background
         drill?.colour?.let { drill_cancel_image_button.setBackgroundResource(it) }
         //TODO: CancelButton redirects user to DrillPickerActivity of according Topic
-        //CancelButton redirects user to MainActivity
+        //CancelButton shows AlertDialog
         drill_cancel_image_button.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            startActivityIfNeeded(intent, 0)
-            finish()
+            alertDialog.show()
         }
     }
 }

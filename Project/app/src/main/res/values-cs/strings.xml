@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Repeatah</string>
-    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_settings">Nastavení</string>
 
     <string name="tab_text_1">Testy</string>
     <string name="tab_text_2">Statistiky</string>
@@ -16,6 +16,20 @@
     <string name="time">Čas:</string>
     <string name="points">Body: %1$d</string>
     <string name="next">Dále</string>
+    <string name="endDrill">Ukončit test</string>
+    <string name="chooseAnswer">Prosím vyberte odpověď</string>
+
+    <string name="endOfDrill">Konec testu!</string>
+    <string name="yourScore">Vaše skóre:\n%1$d bodů</string>
+    <string name="numOfCorrectAnswers">Správné odpovědi:\n%1$d/%2$d</string>
+    <string name="timeSpentOnTest">Čas testu:\n%1$s</string>
+    <string name="finishDrill">Dokončit</string>
+
+    <string name="endDrillAlertTitle">Konec testu?</string>
+    <string name="endDrillAlertMessage">Potvrďte ukončení testu.\nVýsledek nebude uložen!</string>
+
+    <string name="continueString">Pokračovat</string>
+    <string name="endString">Ukončit</string>
 
     <string name="daily_reminder_switch_name">Denná připomínka</string>
     <string name="show_answers_after_test">Zobrazit odpovědi po dokončení testu</string>
@@ -27,5 +41,8 @@
 
     <string name="welcome">Vítejte!</string>
     <string name="welcome_message">Nastavuje se prostředí.\nPočkejte prosím.</string>
+
+    <string name="downloadErrorMessage">Nepodařilo se stáhnout databázy</string>
+    <string name="downloadAgain">Stáhnout znova</string>
 
 </resources>

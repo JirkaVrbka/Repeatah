@@ -2,6 +2,7 @@ package cz.muni.fi.pv239.repeatah.web
 
 import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
+import cz.muni.fi.pv239.repeatah.R
 import cz.muni.fi.pv239.repeatah.model.Answer
 import cz.muni.fi.pv239.repeatah.model.Drill
 import cz.muni.fi.pv239.repeatah.model.Question
@@ -73,10 +74,10 @@ class JSONwebParser {
             val jsonDetail = jsonRecords.getJSONObject(i)
 
             val topicId = jsonDetail.getString("topic_id").toInt()
+            val icon = getIcon(jsonDetail.getString("icon"))
             val name = jsonDetail.getString("name")
-            val icon = jsonDetail.getString("icon").toInt()
-            val colour = jsonDetail.getString("colour").toInt()
-            val background = jsonDetail.getString("background").toInt()
+            val colour = getColour(jsonDetail.getString("colour"))
+            val background = getBackground(colour)
 
             val topic = Topic(topicId, name, icon, colour, background)
             topics.add(topic)
@@ -98,8 +99,8 @@ class JSONwebParser {
             val drill_id = jsonDetail.getString("drill_id").toInt()
             val drill_topic_id = jsonDetail.getString("drill_topic_id").toInt()
             val name = jsonDetail.getString("name")
-            val colour = jsonDetail.getString("colour").toInt()
-            val background = jsonDetail.getString("background").toInt()
+            val colour = getColour(jsonDetail.getString("colour"))
+            val background = getBackground(colour)
 
             val drill = Drill(drill_id, drill_topic_id, name, colour, background)
             drills.add(drill)
@@ -152,4 +153,44 @@ class JSONwebParser {
         return answers
     }
 
+    //Function for getting icon Drawable Int from a String in Internet Database
+    private fun getIcon(iconString : String): Int {
+        val icon : Int
+        when(iconString){
+            "florist" -> icon = R.drawable.ic_local_florist_white_24dp
+            "power" -> icon = R.drawable.ic_power_white_24dp
+            "map" -> icon = R.drawable.ic_map_white_24dp
+            "balance" -> icon = R.drawable.ic_account_balance_black_24dp
+            else -> icon = R.drawable.ic_close_white_32dp
+        }
+        return icon
+    }
+
+    //Function for getting colour Drawable Int from a String in Internet Database
+    private fun getColour(colourString: String) : Int {
+        val colour : Int
+        when (colourString){
+            "red" -> colour = R.color.colorRed
+            "green" -> colour = R.color.colorGreen
+            "orange" -> colour = R.color.colorOrange
+            "blue" -> colour = R.color.colorBlue
+            "pink" -> colour = R.color.colorPink
+            else -> colour = R.color.colorSkyBlue
+        }
+        return colour
+    }
+
+    //Function for getting background Drawable Int from a colour Int
+    private fun getBackground(colour : Int) : Int{
+        val background : Int
+        when(colour){
+            R.color.colorRed -> background = R.drawable.background_red_ic_topic
+            R.color.colorGreen -> background = R.drawable.background_green_ic_topic
+            R.color.colorOrange -> background = R.drawable.background_orange_ic_topic
+            R.color.colorPink -> background = R.drawable.background_pink_ic_topic
+            R.color.colorBlue -> background = R.drawable.background_blue_ic_topic
+            else -> background = R.drawable.background_sky_blue_ic_topic
+        }
+        return background
+    }
 }
