@@ -9,10 +9,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.snackbar.Snackbar
 import cz.muni.fi.pv239.repeatah.R
 import cz.muni.fi.pv239.repeatah.database.DrillRoomDatabase
 import cz.muni.fi.pv239.repeatah.main.MainActivity
 import cz.muni.fi.pv239.repeatah.web.ConnectionChecker
+import java.lang.Exception
 
 /**
  * Launcher Activity.
@@ -24,10 +27,14 @@ class WelcomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
 
-        //Asynchronous download of Database
-        DownloadTask(
-            this
-        ).execute()
+        try {
+            //Asynchronous download of Database
+            DownloadTask(this).execute()
+        }catch (e : Exception){
+            //TODO: Try to download again
+            Snackbar.make(ConstraintLayout(this) , R.string.downloadErrorMessage, Snackbar.LENGTH_INDEFINITE).show()
+        }
+
     }
 
 

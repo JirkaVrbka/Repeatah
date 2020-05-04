@@ -6,14 +6,15 @@ import cz.muni.fi.pv239.repeatah.model.Answer
 import cz.muni.fi.pv239.repeatah.model.Drill
 import cz.muni.fi.pv239.repeatah.model.Question
 import cz.muni.fi.pv239.repeatah.model.Topic
+import cz.muni.fi.pv239.repeatah.model.stats.Stats
 import cz.muni.fi.pv239.repeatah.web.JSONwebParser
 
 /*
  * Class for representing an App Database
  */
 @Database(
-    entities = [Topic::class, Drill::class, Question::class, Answer::class],
-    version = 1
+    entities = [Topic::class, Drill::class, Question::class, Answer::class, Stats::class],
+    version = 4
 )
 abstract class DrillRoomDatabase : RoomDatabase() {
     //Preparing DAOs
@@ -21,6 +22,8 @@ abstract class DrillRoomDatabase : RoomDatabase() {
     abstract fun DrillDao() : DrillDao
     abstract fun QuestionDao() : QuestionDao
     abstract fun AnswerDao() : AnswerDao
+
+    abstract fun StatsDao() : StatsDao
 
     //Companion object providing public static method to other Classes
     companion object{

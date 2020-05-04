@@ -1,16 +1,12 @@
 package cz.muni.fi.pv239.repeatah.drill
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
+import android.os.SystemClock
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 
 import cz.muni.fi.pv239.repeatah.R
 import cz.muni.fi.pv239.repeatah.database.DrillRoomDatabase
@@ -19,6 +15,7 @@ import cz.muni.fi.pv239.repeatah.model.transaction.QuestionWithAnswers
 import kotlinx.android.synthetic.main.fragment_question.*
 
 import kotlinx.android.synthetic.main.fragment_question.view.*
+import kotlin.collections.ArrayList
 
 
 private const val ARG_DRILL = "Drill"
@@ -40,7 +37,9 @@ class QuestionFragment(val drillId : Int): Fragment() {
     //Position of a Button with checked Answer
     var checkedAnswerPosition : Int? = null
 
-    @SuppressLint("ResourceAsColor")
+    var timePassed = 0L
+    var numberOfCorrectAnswers = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,8 +49,10 @@ class QuestionFragment(val drillId : Int): Fragment() {
         val answerButtons = listOf(question_answer_one_button, question_answer_two_button,
             question_answer_three_button, question_answer_four_button)
 
-        val questions : List<QuestionWithAnswers>? = database?.QuestionDao()?.getQuestionsWithAnswers(drillId)
-        var answers : List<Answer>? = questions?.get(questionPosition)?.answers
+        //Get and shuffle Questions
+        val questions : List<QuestionWithAnswers>? = database?.QuestionDao()?.getQuestionsWithAnswers(drillId)?.shuffled()
+        //Get and shuffle Answers
+        var answers : List<Answer>? = questions?.get(questionPosition)?.answers?.shuffled()
 
         // Position in a list of Answers
         // private var answerPosition = shuffleAnswers()
@@ -68,22 +69,44 @@ class QuestionFragment(val drillId : Int): Fragment() {
         question_next_button.setOnClickListener{
             //If Question was answered
             if (checkedAnswerPosition != null) {
-                givePoints(answers)
+                val timeUponAnswering = SystemClock.elapsedRealtime() - question_time_chronometer.base
+                givePoints(timeUponAnswering, answers)
                 //Uncheck Answers for new Question
                 checkedAnswerPosition = null
 
                 //Change question
                 questionPosition++
+                timePassed = timeUponAnswering
 
-                //Set up new answers
-                answers = questions?.get(questionPosition)?.answers
-                //Change back button colours
-                for(button in answerButtons){
-                    changeAnswerButtonToOriginalColour(button)
+                //If Drill ends
+                if (questions?.size == questionPosition){
+                    //Prepare data to send to EndDrillFragment
+                    val fragmentArgs = Bundle()
+                    fragmentArgs.putLong(EndDrillFragment.TIME, timePassed)
+                    fragmentArgs.putInt(EndDrillFragment.SCORE, score)
+                    fragmentArgs.putInt(EndDrillFragment.NUM_OF_CORRECT_ANSWERS, numberOfCorrectAnswers)
+                    //In this case questions.size == question position
+                    fragmentArgs.putInt(EndDrillFragment.NUM_OF_QUESTIONS, questionPosition)
+
+                    //Start new EndDrillFragment
+                    val endDrillFragment = EndDrillFragment()
+                    endDrillFragment.arguments = fragmentArgs
+                    val supportFragmentManager = activity?.supportFragmentManager
+                    supportFragmentManager?.beginTransaction()?.replace(R.id.drill_fragment_container, endDrillFragment)?.commit()
+                }
+                //If Drill does not end
+                else{
+                    //Set up new answers and shuffle them
+                    answers = questions?.get(questionPosition)?.answers?.shuffled()
+                    //Change back button colours
+                    for(button in answerButtons){
+                        changeAnswerButtonToOriginalColour(button)
+                    }
+                    //Update Fragment data - Question, Answers, score and progress
+                    updateData(answerButtons, question_text_text_view, questions, answers,
+                        question_points_text_view, question_progressBar)
                 }
 
-                updateData(answerButtons, question_text_text_view, questions, answers,
-                    question_points_text_view, question_progressBar)
             } else{
                 //Show Toast with error
                 Toast.makeText(context, R.string.chooseAnswer, Toast.LENGTH_SHORT).show()
@@ -201,20 +224,25 @@ class QuestionFragment(val drillId : Int): Fragment() {
     }
 
     //Function for giving points for answered Question
-    private fun givePoints(answers : List<Answer>?){
+    //Total points given depends on time spent on a Question
+    private fun givePoints(time : Long, answers : List<Answer>?){
         val correct = checkedAnswerPosition?.let { answers?.get(it)?.correct } ?: false
+        val timeSpentOnQuestion = (time - timePassed).toInt()
         if (correct){
-            score++
+            score += 2
+            //If Question was answered within three seconds, player receives three bonus points
+            if (timeSpentOnQuestion <= 3000){
+                score += 3
+            }
+            //If Question was answered within 5 seconds, player receives two bonus points
+            else if (timeSpentOnQuestion > 3000 && timeSpentOnQuestion <= 5000){
+                score += 2
+            }
+            //If Question was answered within 7 seconds, player receives one bonus point
+            else if (timeSpentOnQuestion > 5000 && timeSpentOnQuestion <= 7000){
+                score += 1
+            }
+            numberOfCorrectAnswers += 1
         }
-    }
-
-    //TODO: Function for shuffling Answer positions
-    fun shuffleAnswers(){
-        return
-    }
-
-    //TODO: Function for shuffling Question positions
-    fun shuffleQuestions(){
-        return
     }
 }

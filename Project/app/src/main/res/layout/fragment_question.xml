@@ -1,177 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".drill.QuestionFragment">
 
-    <ProgressBar
-        android:id="@+id/question_progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="wrap_content">
 
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        <ProgressBar
+            android:id="@+id/question_progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="24dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
 
-        android:progressTint="@color/colorSkyBlue"
-        />
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="24dp"
 
-    <TextView
-        android:id="@+id/question_time_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            android:progressTint="@color/colorSkyBlue"
+            />
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/question_progressBar"
+        <TextView
+            android:id="@+id/question_time_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/question_progressBar"
 
-        android:text="@string/time"
-        android:textSize="32sp"
-        android:textColor="@color/colorDarkGrey"
-        />
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
 
-    <Chronometer
-        android:id="@+id/question_time_chronometer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            android:text="@string/time"
+            android:textSize="32sp"
+            android:textColor="@color/colorDarkGrey"
+            />
 
-        app:layout_constraintStart_toEndOf="@id/question_time_text_view"
-        app:layout_constraintTop_toBottomOf="@id/question_progressBar"
+        <Chronometer
+            android:id="@+id/question_time_chronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/question_time_text_view"
+            app:layout_constraintTop_toBottomOf="@id/question_progressBar"
 
-        android:textSize="32sp"
-        android:textColor="@color/colorDarkGrey"
-        />
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
 
-    <TextView
-        android:id="@+id/question_points_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            android:textSize="32sp"
+            android:textColor="@color/colorDarkGrey"
+            />
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/question_progressBar"
+        <TextView
+            android:id="@+id/question_points_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/question_progressBar"
 
-        android:text="@string/points"
-        android:textSize="32sp"
-        android:textColor="@color/colorDarkGrey"
-        />
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="16dp"
 
-    <TextView
-        android:id="@+id/question_text_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
+            android:text="@string/points"
+            android:textSize="32sp"
+            android:textColor="@color/colorDarkGrey"
+            />
 
-        android:layout_centerHorizontal="true"
-        app:layout_constraintTop_toBottomOf="@id/question_time_text_view"
+        <TextView
+            android:id="@+id/question_text_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
 
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="16dp"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintTop_toBottomOf="@id/question_time_text_view"
 
-        android:textSize="24sp"
-        android:gravity="center"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="16dp"
 
-        />
+            android:textSize="24sp"
+            android:gravity="center"
 
-    <Button
-        android:id="@+id/question_answer_one_button"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
+            />
 
-        android:layout_centerHorizontal="true"
-        app:layout_constraintTop_toBottomOf="@id/question_text_text_view"
+        <Button
+            android:id="@+id/question_answer_one_button"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
 
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="16dp"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintTop_toBottomOf="@id/question_text_text_view"
 
-        android:background="@color/colorRed"
-        android:textSize="24sp"
-        />
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="16dp"
 
-    <Button
-        android:id="@+id/question_answer_two_button"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
+            android:background="@color/colorRed"
+            android:textSize="24sp"
+            />
 
-        android:layout_centerHorizontal="true"
-        app:layout_constraintTop_toBottomOf="@id/question_answer_one_button"
+        <Button
+            android:id="@+id/question_answer_two_button"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
 
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="16dp"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintTop_toBottomOf="@id/question_answer_one_button"
 
-        android:background="@color/colorGreen"
-        android:textSize="24sp"
-        />
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="16dp"
 
-    <Button
-        android:id="@+id/question_answer_three_button"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
+            android:background="@color/colorGreen"
+            android:textSize="24sp"
+            />
 
-        android:layout_centerHorizontal="true"
-        app:layout_constraintTop_toBottomOf="@id/question_answer_two_button"
+        <Button
+            android:id="@+id/question_answer_three_button"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
 
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="16dp"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintTop_toBottomOf="@id/question_answer_two_button"
 
-        android:background="@color/colorBlue"
-        android:textSize="24sp"
-        />
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="16dp"
 
-    <Button
-        android:id="@+id/question_answer_four_button"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
+            android:background="@color/colorBlue"
+            android:textSize="24sp"
+            />
 
-        android:layout_centerHorizontal="true"
-        app:layout_constraintTop_toBottomOf="@id/question_answer_three_button"
+        <Button
+            android:id="@+id/question_answer_four_button"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
 
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="16dp"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintTop_toBottomOf="@id/question_answer_three_button"
 
-        android:background="@color/colorOrange"
-        android:textSize="24sp"
-        />
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="16dp"
 
-    <Button
-        android:id="@+id/question_next_button"
-        android:layout_width="wrap_content"
-        android:layout_height="56dp"
+            android:background="@color/colorOrange"
+            android:textSize="24sp"
+            />
 
-        android:backgroundTint="@color/colorPink"
+        <Button
+            android:id="@+id/question_next_button"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/question_answer_four_button"
+            android:backgroundTint="@color/colorPink"
 
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="28dp"
-        android:paddingStart="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/question_answer_four_button"
 
-        android:text="@string/next"
-        android:textSize="16sp"
-        android:drawableEnd="@drawable/ic_navigate_next_white_24dp"
-        tools:ignore="RtlSymmetry"
-        />
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="28dp"
+            android:paddingStart="24dp"
 
+            android:text="@string/next"
+            android:textSize="16sp"
+            android:drawableEnd="@drawable/ic_navigate_next_white_24dp"
+            tools:ignore="RtlSymmetry"
+            />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

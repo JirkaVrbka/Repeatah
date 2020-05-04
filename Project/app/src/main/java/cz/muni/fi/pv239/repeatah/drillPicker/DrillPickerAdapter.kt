@@ -53,6 +53,7 @@ class DrillPickerAdapter(private val icon : Int , private val drills : List<Dril
                     putExtras(bundle)
                 }
                 itemView.context.startActivity(intent)
+                (itemView.context as DrillPickerActivity).finish()
             }
         }
     }
