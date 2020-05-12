@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import cz.muni.fi.pv239.repeatah.R
 import cz.muni.fi.pv239.repeatah.drillPicker.DrillPickerActivity
+import cz.muni.fi.pv239.repeatah.main.MainActivity
 import cz.muni.fi.pv239.repeatah.model.transaction.TopicWithDrills
 import kotlinx.android.synthetic.main.item_topic.view.*
 
@@ -56,6 +57,7 @@ class TopicAdapter(private val topics : List<TopicWithDrills>?): RecyclerView.Ad
                     putExtras(bundle)
                 }
                 itemView.context.startActivity(intent)
+                (itemView.context as MainActivity).finish()
             }
         }
     }

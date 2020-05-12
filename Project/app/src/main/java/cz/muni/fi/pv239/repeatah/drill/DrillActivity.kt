@@ -39,12 +39,15 @@ class DrillActivity : AppCompatActivity() {
             }
             .create()
 
-        //Set up QuestionFragment
-        val questionFragment = drill?.id?.let { QuestionFragment(it) }
-        questionFragment?.let {
-            supportFragmentManager.beginTransaction().add(R.id.drill_fragment_container,
-                it
-            ).commit()
+        //If there is no savedInstanceState, create new QuestionFragment
+        if (savedInstanceState == null){
+            //Set up QuestionFragment
+            val questionFragment = drill?.id?.let { QuestionFragment.newInstance(it) }
+            questionFragment?.let {
+                supportFragmentManager.beginTransaction().add(R.id.drill_fragment_container,
+                    it
+                ).commit()
+            }
         }
 
         //Set Drill colour

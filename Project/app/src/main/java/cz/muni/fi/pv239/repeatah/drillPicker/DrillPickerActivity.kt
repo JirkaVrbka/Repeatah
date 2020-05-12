@@ -52,6 +52,7 @@ class DrillPickerActivity : AppCompatActivity() {
         drill_back_image_button.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivityIfNeeded(intent, 0)
+            this.finish()
         }
 
         //Create RecyclesViews' Adapter

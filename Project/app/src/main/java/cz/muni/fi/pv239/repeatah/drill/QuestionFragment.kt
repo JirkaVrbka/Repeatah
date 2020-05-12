@@ -15,21 +15,22 @@ import cz.muni.fi.pv239.repeatah.model.transaction.QuestionWithAnswers
 import kotlinx.android.synthetic.main.fragment_question.*
 
 import kotlinx.android.synthetic.main.fragment_question.view.*
-import kotlin.collections.ArrayList
 
 
-private const val ARG_DRILL = "Drill"
+private const val SCORE = "score"
+private const val QUESTION_POSITION = "questionPosition"
+private const val TIME_PASSED = "time_passed"
+private const val NUMBER_OF_CORRECT_ANSWERS = "numberOfCorrectAnswers"
+private const val QUESTIONS = "questions"
+private const val ANSWERS = "answers"
 
 /**
  * Fragment for Answering a Question
  */
-class QuestionFragment(val drillId : Int): Fragment() {
+class QuestionFragment: Fragment() {
 
     // Position in a List of QuestionsWithAnswers
     var questionPosition = 0
-
-    //Just for testing
-    var answerPosition : ArrayList<Int> = arrayListOf(0, 1, 2, 3)
 
     // User's score
     var score = 0
@@ -40,30 +41,73 @@ class QuestionFragment(val drillId : Int): Fragment() {
     var timePassed = 0L
     var numberOfCorrectAnswers = 0
 
+    var savedQuestions : ArrayList<QuestionWithAnswers>? = null
+    var savedAnswers : ArrayList<Answer>? = null
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        //Save data on orientation change
+        outState.putInt(SCORE, score)
+        outState.putInt(QUESTION_POSITION, questionPosition)
+        outState.putInt(NUMBER_OF_CORRECT_ANSWERS, numberOfCorrectAnswers)
+        outState.putParcelableArrayList(QUESTIONS, savedQuestions)
+        outState.putParcelableArrayList(ANSWERS, savedAnswers)
+
+        //Get current Chronometer time
+        val currentTime = SystemClock.elapsedRealtime() - question_time_chronometer.base
+        outState.putLong(TIME_PASSED, currentTime)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_question, container, false).apply {
 
-        val database : DrillRoomDatabase? = context?.let { DrillRoomDatabase.getDatabase(it) }
+        var answers : List<Answer>?
+        val questions : List<QuestionWithAnswers>?
+
+        //Get data from database onCreate of QuestionFragment
+        if (savedInstanceState == null){
+            //Get Drill ID from QuestionFragment arguments. Arguments are declared in newInstance() function in companion object
+            val drillId = arguments?.getInt(DRILL_ID)
+            val database : DrillRoomDatabase? = context?.let { DrillRoomDatabase.getDatabase(it) }
+
+            //Get and shuffle Questions
+            questions =
+                drillId?.let { database?.QuestionDao()?.getQuestionsWithAnswers(it)?.shuffled() }
+            //Get and shuffle Answers
+            answers = questions?.get(questionPosition)?.answers?.shuffled()
+        }
+        //Get saved data in case of screen rotation
+        else{
+            questions = savedInstanceState.getParcelableArrayList(QUESTIONS)
+            answers = savedInstanceState.getParcelableArrayList(ANSWERS)
+            questionPosition = savedInstanceState.getInt(QUESTION_POSITION)
+            score = savedInstanceState.getInt(SCORE)
+            timePassed = savedInstanceState.getLong(TIME_PASSED)
+            numberOfCorrectAnswers = savedInstanceState.getInt(NUMBER_OF_CORRECT_ANSWERS)
+        }
+
+        //Save data from Database in case of screen rotation
+        savedQuestions = questions as ArrayList<QuestionWithAnswers>?
+        savedAnswers = answers as ArrayList<Answer>?
+
         val answerButtons = listOf(question_answer_one_button, question_answer_two_button,
             question_answer_three_button, question_answer_four_button)
 
-        //Get and shuffle Questions
-        val questions : List<QuestionWithAnswers>? = database?.QuestionDao()?.getQuestionsWithAnswers(drillId)?.shuffled()
-        //Get and shuffle Answers
-        var answers : List<Answer>? = questions?.get(questionPosition)?.answers?.shuffled()
-
-        // Position in a list of Answers
-        // private var answerPosition = shuffleAnswers()
-
-
-        //Start time
+        //Start time from zero or saved time from previous instance
+        question_time_chronometer.base = SystemClock.elapsedRealtime() - timePassed
         question_time_chronometer.start()
 
         //Loads data for the first time
         updateData(answerButtons, question_text_text_view, questions, answers,
-            question_points_text_view, question_progressBar)
+            question_points_text_view, question_progressBar, question_next_button)
+
+        //Restore ProgressBar progress
+        if (savedInstanceState == null){
+            question_progressBar.progress = ((100 / (questions?.size ?: 1)) * (questionPosition + 1))
+        }
 
         //Next Button click logic
         question_next_button.setOnClickListener{
@@ -104,7 +148,7 @@ class QuestionFragment(val drillId : Int): Fragment() {
                     }
                     //Update Fragment data - Question, Answers, score and progress
                     updateData(answerButtons, question_text_text_view, questions, answers,
-                        question_points_text_view, question_progressBar)
+                        question_points_text_view, question_progressBar, question_next_button)
                 }
 
             } else{
@@ -126,7 +170,7 @@ class QuestionFragment(val drillId : Int): Fragment() {
     //Updates Question, Answers, ProgressBar and score
     private fun updateData(answerButtons : List<Button>, questionTextView : TextView,
                    questions : List<QuestionWithAnswers>?, answers : List<Answer>?,
-                   scoreTextView: TextView, progressBar: ProgressBar) {
+                   scoreTextView: TextView, progressBar: ProgressBar, nextButton: Button) {
         //Set ProgressBar progress
         updateProgressBar(progressBar, questions)
         //Set Question text
@@ -138,22 +182,20 @@ class QuestionFragment(val drillId : Int): Fragment() {
 
         //Changes NextButton to EndButton
         if (questionPosition == ((questions?.size ?: 1) - 1)){
-            question_next_button.text = context?.resources?.getString(R.string.endDrill)
-            question_next_button.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check_box_black_24dp, 0)
-            question_next_button.compoundDrawablePadding = 16
+            updateEndButton(nextButton)
         }
     }
 
     //Function for updating text of Answer Buttons
     private fun updateAnswers(answerButtons : List<Button>, answers : List<Answer>?){
         //Set first Answer
-        answerButtons[0].text = answers?.get(answerPosition[0])?.text
+        answerButtons[0].text = answers?.get(0)?.text
         //Set second Answer
-        answerButtons[1].text = answers?.get(answerPosition[1])?.text
+        answerButtons[1].text = answers?.get(1)?.text
         //Set third Answer
-        answerButtons[2].text = answers?.get(answerPosition[2])?.text
+        answerButtons[2].text = answers?.get(2)?.text
         //Set fourth Answer
-        answerButtons[3].text = answers?.get(answerPosition[3])?.text
+        answerButtons[3].text = answers?.get(3)?.text
     }
 
     //Function for updating text of Question TextView
@@ -243,6 +285,26 @@ class QuestionFragment(val drillId : Int): Fragment() {
                 score += 1
             }
             numberOfCorrectAnswers += 1
+        }
+    }
+
+    //Function to change NextButton to EndButton
+    private fun updateEndButton(nextButton : Button){
+        nextButton.text = context?.resources?.getString(R.string.endDrill)
+        nextButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check_box_black_24dp, 0)
+        nextButton.compoundDrawablePadding = 16
+    }
+
+    companion object{
+        private val DRILL_ID = "drillId"
+
+        //Function for passing arguments into QuestionFragment
+        fun newInstance(drillId : Int) : QuestionFragment{
+            val args = Bundle()
+            args.putInt(DRILL_ID, drillId)
+            val questionFragment = QuestionFragment()
+            questionFragment.arguments = args
+            return questionFragment
         }
     }
 }
