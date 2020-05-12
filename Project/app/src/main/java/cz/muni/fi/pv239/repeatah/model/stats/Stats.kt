@@ -17,6 +17,8 @@ data class Stats (
     //Date of completing a Drill
     @ColumnInfo(name = "date") val date : String,
 
+    //ID of a corresponding Drill
+    @ColumnInfo(name = "drill_id") val drillId : Int,
     //Score reached in a Drill
     @ColumnInfo(name = "score") val score : Int,
     //Time spent on a Drill

@@ -34,6 +34,7 @@ class EndDrillFragment : Fragment() {
         val time = arguments?.getLong(TIME) ?: 0
         val numOfCorrectAnswers = arguments?.getInt(NUM_OF_CORRECT_ANSWERS) ?: 0
         val numOfQuestions = arguments?.getInt(NUM_OF_QUESTIONS) ?: 0
+        val drillId = arguments?.getInt(DRILL_ID) ?: 0
 
         //Convert time in milliseconds to MM:SS format String
         val timeFormat = SimpleDateFormat("mm:ss").format(time)
@@ -78,6 +79,7 @@ class EndDrillFragment : Fragment() {
                 date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
                 score = score,
                 time = time,
+                drillId = drillId,
                 numOfCorrectAnswers = numOfCorrectAnswers,
                 numOfQuestions = numOfQuestions
             ))
@@ -94,5 +96,6 @@ class EndDrillFragment : Fragment() {
         const val TIME = "time"
         const val NUM_OF_CORRECT_ANSWERS = "numOfCorrectAnswers"
         const val NUM_OF_QUESTIONS = "numOfQuestions"
+        const val DRILL_ID = "drill_id"
     }
 }

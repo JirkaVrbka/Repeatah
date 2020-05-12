@@ -67,10 +67,11 @@ class QuestionFragment: Fragment() {
         var answers : List<Answer>?
         val questions : List<QuestionWithAnswers>?
 
+        //Get Drill ID from QuestionFragment arguments. Arguments are declared in newInstance() function in companion object
+        val drillId = arguments?.getInt(DRILL_ID)
+
         //Get data from database onCreate of QuestionFragment
         if (savedInstanceState == null){
-            //Get Drill ID from QuestionFragment arguments. Arguments are declared in newInstance() function in companion object
-            val drillId = arguments?.getInt(DRILL_ID)
             val database : DrillRoomDatabase? = context?.let { DrillRoomDatabase.getDatabase(it) }
 
             //Get and shuffle Questions
@@ -131,6 +132,7 @@ class QuestionFragment: Fragment() {
                     fragmentArgs.putInt(EndDrillFragment.NUM_OF_CORRECT_ANSWERS, numberOfCorrectAnswers)
                     //In this case questions.size == question position
                     fragmentArgs.putInt(EndDrillFragment.NUM_OF_QUESTIONS, questionPosition)
+                    drillId?.let { it1 -> fragmentArgs.putInt(EndDrillFragment.DRILL_ID, it1) }
 
                     //Start new EndDrillFragment
                     val endDrillFragment = EndDrillFragment()

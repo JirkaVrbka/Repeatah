@@ -14,7 +14,7 @@ import cz.muni.fi.pv239.repeatah.web.JSONwebParser
  */
 @Database(
     entities = [Topic::class, Drill::class, Question::class, Answer::class, Stats::class],
-    version = 4
+    version = 5
 )
 abstract class DrillRoomDatabase : RoomDatabase() {
     //Preparing DAOs
