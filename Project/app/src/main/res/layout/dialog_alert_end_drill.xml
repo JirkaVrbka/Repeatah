@@ -7,6 +7,7 @@
 
     android:paddingStart="16dp"
     android:paddingEnd="4dp"
+    android:paddingBottom="16dp"
     >
 
     <TextView
@@ -16,10 +17,13 @@
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/end_drill_alert_icon_image_view"
 
         android:text="@string/endDrillAlertTitle"
         android:textSize="32sp"
         style="@style/AlertDialogStyle"
+
+        android:layout_marginEnd="16dp"
         />
 
     <TextView
@@ -32,8 +36,10 @@
         android:textSize="16sp"
 
         app:layout_constraintTop_toBottomOf="@id/end_drill_alert_title_text_view"
+        app:layout_constraintEnd_toStartOf="@id/end_drill_alert_icon_image_view"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
         />
 
     <ImageView
@@ -44,12 +50,8 @@
         android:src="@drawable/ic_sentiment_dissatisfied_black_24dp"
 
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/end_drill_alert_message_text_view"
         app:layout_constraintTop_toTopOf="parent"
 
-        android:layout_marginStart="16dp"
-
-        />
-
+        android:layout_marginStart="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
