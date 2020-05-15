@@ -1,4 +1,4 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+ <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,8 +26,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
+            android:id="@+id/rating_average_correct_answers"
 
-            android:tooltipText="0/0"
+            android:numStars="5"
+            android:progressTint="@color/colorOrange"
+            android:progressBackgroundTint="@color/colorDarkGrey"
+            android:secondaryProgressTint="@color/colorOrange"
             android:isIndicator="true"
             />
 
@@ -45,8 +49,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
+            android:id="@+id/rating_average_time_of_answer"
 
-            android:tooltipText="0/0"
+            android:numStars="5"
+            android:progressTint="@color/colorOrange"
+            android:progressBackgroundTint="@color/colorDarkGrey"
+            android:secondaryProgressTint="@color/colorOrange"
             android:isIndicator="true"
             />
 
@@ -64,8 +72,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
+            android:id="@+id/rating_average_score"
 
-            android:tooltipText="0/0"
+            android:numStars="5"
+            android:progressTint="@color/colorOrange"
+            android:progressBackgroundTint="@color/colorDarkGrey"
+            android:secondaryProgressTint="@color/colorOrange"
             android:isIndicator="true"
             />
 
@@ -88,8 +100,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginTop="8dp"
 
-            app:seriesData="0=5;2=5;3=0;4=2"
-            android:id = "@+id/graph"
+            android:id = "@+id/statistics_graph"
             />
 
     </LinearLayout>
