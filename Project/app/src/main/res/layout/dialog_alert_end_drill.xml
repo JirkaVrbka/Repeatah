@@ -5,9 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/AlertDialogStyle"
 
-    android:paddingStart="16dp"
+    android:paddingStart="8dp"
     android:paddingEnd="4dp"
-    android:paddingBottom="16dp"
     >
 
     <TextView
@@ -47,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:src="@drawable/ic_sentiment_dissatisfied_black_24dp"
+        android:src="@drawable/ic_sentiment_dissatisfied_white_24dp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

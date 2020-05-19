@@ -293,7 +293,7 @@ class QuestionFragment: Fragment() {
     //Function to change NextButton to EndButton
     private fun updateEndButton(nextButton : Button){
         nextButton.text = context?.resources?.getString(R.string.endDrill)
-        nextButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check_box_black_24dp, 0)
+        nextButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check_box_white_24dp, 0)
         nextButton.compoundDrawablePadding = 16
     }
 
