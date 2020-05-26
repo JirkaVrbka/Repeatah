@@ -56,7 +56,6 @@ class DrillPickerActivity : AppCompatActivity() {
         }
 
         //Create RecyclesViews' Adapter
-        //TODO: send Drills to DrillAdapter
         val adapter = topic?.icon?.let { drills?.let { it1 -> DrillPickerAdapter(it, it1) } }
         //Add RecyclerViews' LayoutManager
         drill_recycler_view.layoutManager = LinearLayoutManager(this)

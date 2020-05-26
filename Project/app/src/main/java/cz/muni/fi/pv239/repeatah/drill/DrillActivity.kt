@@ -25,7 +25,6 @@ class DrillActivity : AppCompatActivity() {
         //Get Drill from DrillPickerActivity
         val drill : Drill? = intent.extras?.getParcelable(ARG_DRILL)
 
-        //TODO: Repair positive and negative button positions
         //Create AlertDialog in case of quitting the Drill
         val alertDialog = AlertDialog.Builder(this, R.style.AlertDialogStyle_Drill)
             .setView(R.layout.dialog_alert_end_drill)
@@ -56,7 +55,6 @@ class DrillActivity : AppCompatActivity() {
         drill_title_text_view.text = drill?.name
         //Set CancelButton background
         drill?.colour?.let { drill_cancel_image_button.setBackgroundResource(it) }
-        //TODO: CancelButton redirects user to DrillPickerActivity of according Topic
         //CancelButton shows AlertDialog
         drill_cancel_image_button.setOnClickListener{
             alertDialog.show()

@@ -31,10 +31,8 @@ class WelcomeActivity : AppCompatActivity() {
             //Asynchronous download of Database
             DownloadTask(this).execute()
         }catch (e : Exception){
-            //TODO: Try to download again
             Snackbar.make(ConstraintLayout(this) , R.string.downloadErrorMessage, Snackbar.LENGTH_INDEFINITE).show()
         }
-
     }
 
 
