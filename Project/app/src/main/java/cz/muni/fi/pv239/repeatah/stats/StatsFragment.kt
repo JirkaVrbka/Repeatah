@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter
+import com.jjoe64.graphview.DefaultLabelFormatter
+import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import cz.muni.fi.pv239.repeatah.R
+import cz.muni.fi.pv239.repeatah.Utility.modulo
 import cz.muni.fi.pv239.repeatah.database.DrillRoomDatabase
 import kotlinx.android.synthetic.main.fragment_stats.view.*
 import java.text.SimpleDateFormat
@@ -20,9 +22,21 @@ import kotlin.math.min
  * Fragment for checking users' statistics
  */
 class StatsFragment : Fragment() {
+    private val dateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
     companion object {
         private const val NUM_STARS = 5
+        private const val GRAPH_RANGE = 7
+    }
+
+    private class Statistics{
+        var numberOfQuestions: Int = 0
+        var numberOfTests: Int = 0
+        var numberOfCorrectAnswers: Int = 0
+        var sumOfTestTimes: Long = 0L
+        var sumOfScore: Int = 0
+        val testsInTime = emptyMap<Double, Double>().toMutableMap()
+
     }
 
     override fun onCreateView(
@@ -30,79 +44,140 @@ class StatsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_stats, container, false).apply {
+        // load statistics from DB
+        val statistics = getStatistics()
 
-        val database : DrillRoomDatabase? = context?.let { DrillRoomDatabase.getDatabase(it) }
-        val stats = database?.StatsDao()?.getStats()
+        // converts statistics into ratings
+        rating_average_correct_answers.rating = scaleRating(statistics.numberOfCorrectAnswers, statistics.numberOfQuestions)
+        rating_average_time_of_answer.rating = scaleTimeRating(statistics.sumOfTestTimes, statistics.numberOfQuestions)
+        rating_average_score.rating = scaleRating(statistics.sumOfScore, statistics.numberOfQuestions * 5)
 
-        var sumQuestions = 0
-        var sumTests = 0
-        var sumCorrectQuestions = 0
-        var sumFullTime = 0L
-        var sumScore = 0
-        val usage = emptyMap<Date, Int>().toMutableMap()
-        val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        // gather stats from DB
-        stats?.forEach { s ->
-            val date = formatter.parse(s.date)!!
+        // init graph
+        val dataPoints = statistics.testsInTime.toSortedMap().map { entry -> DataPoint(entry.key, entry.value) }.toTypedArray()
 
-            if (!usage.containsKey(date)) {
-                usage[date] = 0
-            }
-
-            usage[date] = usage[date]!! + 1
-
-            sumTests++
-            sumQuestions += s.numOfQuestions
-            sumCorrectQuestions += s.numOfCorrectAnswers
-            sumFullTime += s.time
-            sumScore += s.score
-        }
-
-        for (i : Int in 0..31){
-            val date = Calendar.getInstance()
-            date.add(Calendar.DAY_OF_YEAR, -i)
-
-            if (!usage.containsKey(date.time)) {
-                usage[date.time] = 0
-            }
-        }
-
-
-        usage[SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse("22/04/2020")!!] = 3
-        usage[SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse("23/04/2020")!!] = 4
-        usage[SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse("24/04/2020")!!] = 1
-        usage[SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse("25/04/2020")!!] = 4
-        usage[SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse("26/04/2020")!!] = 4
-        usage[SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse("27/04/2020")!!] = 4
-
-        rating_average_correct_answers.rating = scaleRating(sumCorrectQuestions, sumQuestions)
-        rating_average_time_of_answer.rating = scaleRating(sumFullTime, sumQuestions*10000)
-        rating_average_score.rating = scaleRating(sumScore, sumQuestions * 5)
-
-        val monthBefore = Calendar.getInstance()
-        monthBefore.add(Calendar.DAY_OF_YEAR, -31)
-
-        val array = usage.filter { entry -> entry.key.after(monthBefore.time) }.toSortedMap().map { entry -> DataPoint(entry.key, entry.value.toDouble()) }.toTypedArray()
         val series: LineGraphSeries<DataPoint> = LineGraphSeries(
-            array
+            dataPoints
         )
 
+        // setup graph
         series.thickness = 10
-
-        statistics_graph.addSeries(series)
+        setCustomLabelsToGraph(statistics_graph)
+        statistics_graph.gridLabelRenderer.numHorizontalLabels = GRAPH_RANGE
+        statistics_graph.gridLabelRenderer.numVerticalLabels = (dataPoints.maxBy { p -> p.y }?.y?.toInt() ?: 1) + 1
+        statistics_graph.gridLabelRenderer.isHighlightZeroLines = false
         statistics_graph.title = null
-        statistics_graph.gridLabelRenderer.isHorizontalLabelsVisible = false
-        statistics_graph.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(statistics_graph.context)
-        statistics_graph.gridLabelRenderer.numHorizontalLabels = 31
 
-        statistics_graph.viewport.setMinX(monthBefore.time.time.toDouble())
-        statistics_graph.viewport.setMaxX(Calendar.getInstance().time.time.toDouble())
-        statistics_graph.viewport.isXAxisBoundsManual = true
-
-
+        // draw graph
+        statistics_graph.addSeries(series)
     }
 
+    // TODO move into Utils class (repetition in EndDrillFragment)
     private fun scaleRating(rating: Number, fullRating: Int) : Float{
         return min(rating.toFloat() / fullRating.toFloat() * NUM_STARS, 5f)
+    }
+
+    // TODO move into utils class (repetition in EndDrillFragment)
+    private fun scaleTimeRating(sumTime: Number, numOfQuestions: Int) : Float{
+        var timeProgress = 0F
+        //Maximum time to Question ratio
+        val timeFraction = sumTime.toDouble()/(numOfQuestions * 10000)
+        //Set time according to timeFraction value
+        if (timeFraction <= 0.3){ timeProgress = 5F }
+        else if (timeFraction > 0.3 && timeFraction < 0.37) { timeProgress = 4.5F }
+        else if (timeFraction > 0.37 && timeFraction < 0.45) { timeProgress = 4F }
+        else if (timeFraction > 0.45 && timeFraction < 0.52) { timeProgress = 3.5F }
+        else if (timeFraction > 0.52 && timeFraction < 0.60) { timeProgress = 3F }
+        else if (timeFraction > 0.60 && timeFraction < 0.67) { timeProgress = 2.5F }
+        else if (timeFraction > 0.67 && timeFraction < 0.75) { timeProgress = 2F }
+        else if (timeFraction > 0.75 && timeFraction < 0.82) { timeProgress = 1.5F }
+        else if (timeFraction > 0.82 && timeFraction < 0.90) { timeProgress = 1F }
+        else if (timeFraction > 0.90 && timeFraction < 0.97) { timeProgress = 0.5F }
+        else { timeProgress = 0F }
+
+        return timeProgress
+    }
+
+    private fun setCustomLabelsToGraph(graph: GraphView){
+        graph.gridLabelRenderer.labelFormatter = object : DefaultLabelFormatter() {
+            override fun formatLabel(value: Double, isValueX: Boolean): String {
+                return if (!isValueX) {
+                    // show normal y values as integers
+                    value.toInt().toString()
+                } else {
+                    // show days
+                    when(value.toInt().modulo(7)){
+                        0 -> "So"
+                        1 -> "Ne"
+                        2 -> "Po"
+                        3 -> "Út"
+                        4 -> "St"
+                        5 -> "Čt"
+                        6 -> "Pá"
+                        else -> value.toString()
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Load statistics from DB
+     */
+    private fun getStatistics() : Statistics{
+        // connect to DB
+        val database : DrillRoomDatabase? = context?.let { DrillRoomDatabase.getDatabase(it) }
+        val statsDb = database?.StatsDao()?.getStats()
+
+        // init data
+        val statistics = Statistics()
+        val todayDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
+        for(i in (todayDay - GRAPH_RANGE + 1)..todayDay)
+            statistics.testsInTime[i.toDouble()] = 0.0
+
+        // get data from DB
+        statsDb?.forEach { s ->
+            statistics.numberOfTests++
+            statistics.numberOfQuestions += s.numOfQuestions
+            statistics.numberOfCorrectAnswers += s.numOfCorrectAnswers
+            statistics.sumOfTestTimes += s.time
+            statistics.sumOfScore += s.score
+
+            if(isAfterDate(s.date, GRAPH_RANGE)) {
+                val dateAsPoint = getDateAsPoint(s.date)
+                statistics.testsInTime[dateAsPoint] = (statistics.testsInTime[dateAsPoint] ?: 0.0) + 1
+            }
+        }
+
+        return statistics
+    }
+
+    /**
+     * Converts Date as String (dd/MM/yyyy) to DataPoint
+     */
+    private fun getDateAsPoint(date: String) : Double{
+        val cal = Calendar.getInstance()
+        cal.time = dateFormatter.parse(date)!!
+        val dayNumber = cal.get(Calendar.DAY_OF_WEEK)
+        val currentDayDate = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
+
+        if(dayNumber <= currentDayDate)
+            return dayNumber.toDouble()
+
+        return currentDayDate - dayNumber.toDouble()
+    }
+
+    /**
+     * Checks if given date is after specified date
+     */
+    private fun isAfterDate(date: String, daysBeforeNow: Int) : Boolean{
+        // create reference date
+        val afterDate = Calendar.getInstance()
+        afterDate.add(Calendar.DAY_OF_YEAR, - daysBeforeNow + 1)
+
+        // format string to Date
+        val givenDate = dateFormatter.parse(date)
+
+        // check if date is in range
+        return givenDate?.after(afterDate.time) ?: false
     }
 }
