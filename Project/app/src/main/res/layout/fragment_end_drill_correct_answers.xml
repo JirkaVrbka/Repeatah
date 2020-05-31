@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".drill.EndDrillCorrectAnswersFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/answers_label_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+            android:background="@color/colorPrimary"
+
+            android:text="@string/correct_answers"
+            android:textColor="@color/colorWhite"
+            android:textSize="48sp"
+            android:gravity="center"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/answers_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toBottomOf="@id/answers_label_text_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/end_drill_finish_relative_layout"
+        android:layout_width="match_parent"
+        android:layout_height="184dp"
+        android:background="@color/colorPink"
+        app:layout_constraintTop_toBottomOf="@id/answers_recycler_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/end_drill_answers_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+
+                android:text="@string/back"
+                android:textColor="@color/colorWhite"
+                android:textSize="48sp"
+                android:gravity="center"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/end_drill_answers_text_view"
+
+                android:layout_marginStart="4dp"
+
+                android:src="@drawable/ic_arrow_back_white_64dp"
+                />
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
