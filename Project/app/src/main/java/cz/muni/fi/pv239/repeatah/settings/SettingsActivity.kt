@@ -2,6 +2,9 @@ package cz.muni.fi.pv239.repeatah.settings
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +28,8 @@ class SettingsActivity : AppCompatActivity() {
             .commit()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+
+
         //Redirect back to MainActivity
         val backIcon = findViewById<ImageView>(R.id.back_image_button)
         backIcon.setOnClickListener{
@@ -35,6 +40,19 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {
+
+        override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+            val preferenceManager = PreferenceManager.getDefaultSharedPreferences(context)
+            if (!preferenceManager.getBoolean("notifications", true))
+                findPreference<SeekBarPreference>("notificationsTime")?.isVisible = false
+
+            return super.onCreateView(inflater, container, savedInstanceState)
+        }
+
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
