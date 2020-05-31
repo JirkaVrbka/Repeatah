@@ -106,13 +106,13 @@ class StatsFragment : Fragment() {
                 } else {
                     // show days
                     when(value.toInt().modulo(7)){
-                        0 -> "So"
-                        1 -> "Ne"
-                        2 -> "Po"
-                        3 -> "Út"
-                        4 -> "St"
-                        5 -> "Čt"
-                        6 -> "Pá"
+                        0 -> getString(R.string.day_saturday_shortcut)
+                        1 -> getString(R.string.day_sunday_shortcut)
+                        2 -> getString(R.string.day_monday_shortcut)
+                        3 -> getString(R.string.day_tuesday_shortcut)
+                        4 -> getString(R.string.day_wednesday_shortcut)
+                        5 -> getString(R.string.day_thursday_shortcut)
+                        6 -> getString(R.string.day_friday_shortcut)
                         else -> value.toString()
                     }
                 }
