@@ -4,7 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import androidx.preference.Preference
+import android.widget.Toast
 import androidx.preference.PreferenceManager
 import cz.muni.fi.pv239.repeatah.notifications.NotificationScheduler
 import java.util.*
@@ -12,47 +12,40 @@ import java.util.*
 class NotificationUtility {
 
     companion object {
-        fun enableNotificationAlarm(preference: Preference) {
+        fun enableNotificationAlarm(context: Context, notificationTimeSelected : Int? = null) {
 
             val alarmManager =
-                preference.context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+                context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
             val preferenceManager =
-                PreferenceManager.getDefaultSharedPreferences(preference.context)
+                PreferenceManager.getDefaultSharedPreferences(context)
 
             // Retrieve a PendingIntent that will perform a broadcast
-            val pendingIntent = createPendingIntent(preference)
+            val pendingIntent = createPendingIntent(context)
 
-            val notificationTime = preferenceManager.getInt("notificationsTime", 16)
+            val notificationTime = notificationTimeSelected ?: preferenceManager.getInt("notificationsTime", 16)
 
             /* Set the alarm to start at specified time */
-            val calendar2: Calendar = Calendar.getInstance()
-            calendar2.timeInMillis = System.currentTimeMillis()// + 30000
-            // TODO uncomment in release + remove plus in line before
-            calendar2.set(Calendar.HOUR_OF_DAY, 15)
-            calendar2.set(Calendar.MINUTE, 10)
-
-
             val calendar: Calendar = Calendar.getInstance().apply {
-                timeInMillis = System.currentTimeMillis() + 10000
-//                set(Calendar.HOUR_OF_DAY, 13)
-//                set(Calendar.MINUTE, 1)
+                timeInMillis = System.currentTimeMillis()
+                set(Calendar.HOUR_OF_DAY, notificationTime)
+                set(Calendar.MINUTE, 0)
             }
 
             // Repeating on every day
             alarmManager?.setRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calendar.timeInMillis,
-                AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+                AlarmManager.INTERVAL_DAY,
                 pendingIntent
             )
         }
 
-        fun disableNotificationAlarm(preference: Preference) {
+        fun disableNotificationAlarm(context: Context) {
             val alarmManager =
-                preference.context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+                context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
 
             // Get intent
-            val pendingIntent = createPendingIntent(preference)
+            val pendingIntent = createPendingIntent(context)
 
             // Cancel alarm
             if (pendingIntent != null && alarmManager != null) {
@@ -60,13 +53,13 @@ class NotificationUtility {
             }
         }
 
-        private fun createPendingIntent(preference: Preference) : PendingIntent?{
+        private fun createPendingIntent(context: Context) : PendingIntent?{
             // Retrieve a PendingIntent that will perform a broadcast
-            val alarmIntent = Intent(preference.context, NotificationScheduler::class.java)
+            val alarmIntent = Intent(context, NotificationScheduler::class.java)
 
             // Get intent
             return PendingIntent.getBroadcast(
-                preference.context, 546, alarmIntent,
+                context, 546, alarmIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
         }

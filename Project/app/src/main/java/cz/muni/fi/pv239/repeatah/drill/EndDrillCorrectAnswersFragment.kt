@@ -29,7 +29,7 @@ class EndDrillCorrectAnswersFragment : Fragment() {
 
         //Get Database
         val database : DrillRoomDatabase? = context?.let { DrillRoomDatabase.getDatabase(it) }
-        val drillId = requireArguments().getInt(DRILL_ID)
+        val drillId = arguments?.getInt(DRILL_ID) ?: 0
         val questionsWithAnswersIds = database?.QuestionDao()?.getQuestionsWithAnswers(drillId)
 
 

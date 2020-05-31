@@ -28,7 +28,7 @@ class NotificationScheduler : BroadcastReceiver() {
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java), 0)
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_notification)
+            .setSmallIcon(R.drawable.ic_notification_64dp)
             .setContentTitle(context.getString(R.string.notificationTitle))
             .setContentText(context.getString(R.string.notificationDescription))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
