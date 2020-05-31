@@ -1,5 +1,28 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <SwitchPreferenceCompat
+        app:key="answers"
+        app:title="@string/settingsAnswers"
+        android:defaultValue="false"/>
 
+    <SwitchPreferenceCompat
+        app:key="notifications"
+        app:title="@string/settingsNotifications"
+        android:defaultValue="true"
+        />
+
+    <SeekBarPreference
+        app:key="notificationsTime"
+        app:title="@string/settingsNotificationsTime"
+        app:min="0"
+        android:max="23"
+        android:defaultValue="16"
+        app:showSeekBarValue="true"
+        />
+
+<!--    <Preference-->
+<!--        app:key="notificationsTime"-->
+<!--        app:title="@string/settingsNotificationsTime" />-->
 
 </PreferenceScreen>

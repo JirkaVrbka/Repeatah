@@ -10,7 +10,7 @@ import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import cz.muni.fi.pv239.repeatah.R
-import cz.muni.fi.pv239.repeatah.Utility.modulo
+import cz.muni.fi.pv239.repeatah.utility.modulo
 import cz.muni.fi.pv239.repeatah.database.DrillRoomDatabase
 import kotlinx.android.synthetic.main.fragment_stats.view.*
 import java.text.SimpleDateFormat

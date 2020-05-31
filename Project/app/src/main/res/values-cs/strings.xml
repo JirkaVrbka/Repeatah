@@ -24,6 +24,7 @@
     <string name="numOfCorrectAnswers">Správné odpovědi:\n%1$d/%2$d</string>
     <string name="timeSpentOnTest">Čas testu:\n%1$s</string>
     <string name="finishDrill">Dokončit</string>
+    <string name="back">Zpět</string>
 
     <string name="endDrillAlertTitle">Konec testu?</string>
     <string name="endDrillAlertMessage">Potvrďte ukončení testu.\nVýsledek nebude uložen!</string>
@@ -32,7 +33,7 @@
     <string name="endString">Ukončit</string>
 
     <string name="daily_reminder_switch_name">Denná připomínka</string>
-    <string name="show_answers_after_test">Zobrazit odpovědi po dokončení testu</string>
+    <string name="show_answers_after_test">Zobrazit odpovědi</string>
     <string name="statistics">Statistiky</string>
     <string name="statistics_correctness">Průměrná správnost odpovědí</string>
     <string name="statistics_average_speed">Průměrná rychlost</string>
@@ -44,5 +45,19 @@
 
     <string name="downloadErrorMessage">Nepodařilo se stáhnout databázy</string>
     <string name="downloadAgain">Stáhnout znova</string>
+
+    <!--    Settings    -->
+    <string name="settingsAnswers">Zobrazovat správné odpovědi</string>
+    <string name="settingsNotifications">Zobrazovat notifikace</string>
+    <string name="settingsNotificationsTime">Čas zobrazení notifikace</string>
+
+    <!-- Push notifications   -->
+    <string name="channelName">Repeatah</string>
+    <string name="channelDescription">Repeatah notification</string>
+    <string name="notificationTitle">Repeatah</string>
+    <string name="notificationDescription">Čo si skúsiť nový test?</string>
+
+    <!-- Correct answers fragment   -->
+    <string name="correct_answers">Správné odpovědi</string>
 
 </resources>

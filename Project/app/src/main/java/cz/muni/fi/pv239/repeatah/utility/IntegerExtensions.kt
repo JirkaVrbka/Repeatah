@@ -1,4 +1,4 @@
-package cz.muni.fi.pv239.repeatah.Utility
+package cz.muni.fi.pv239.repeatah.utility
 
 fun Int.modulo(mod: Int) : Int{
     var res = this % mod

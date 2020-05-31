@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.preference.PreferenceManager
 
 import cz.muni.fi.pv239.repeatah.R
 import cz.muni.fi.pv239.repeatah.database.DrillRoomDatabase
@@ -88,6 +89,18 @@ class EndDrillFragment : Fragment() {
             val intent = Intent(context, MainActivity::class.java)
             context.startActivity(intent)
             activity?.finish()
+        }
+
+        // Answers
+        val preferenceManager = PreferenceManager.getDefaultSharedPreferences(activity)
+
+        // show if settings say so
+        end_drill_answers_relative_layout.visibility = if (preferenceManager.getBoolean("answers", false)) View.VISIBLE else View.GONE
+        end_drill_answers_relative_layout.setOnClickListener {
+            val endDrillAnswersFragment = EndDrillCorrectAnswersFragment()
+            endDrillAnswersFragment.arguments = arguments
+            val supportFragmentManager = activity?.supportFragmentManager
+            supportFragmentManager?.beginTransaction()?.replace(R.id.drill_fragment_container, endDrillAnswersFragment)?.commit()
         }
     }
 
