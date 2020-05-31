@@ -60,4 +60,13 @@
     <!-- Correct answers fragment   -->
     <string name="correct_answers">Spravne odpovede</string>
 
+    <!-- Statistics   -->
+    <string name="day_monday_shortcut">Po</string>
+    <string name="day_tuesday_shortcut">Út</string>
+    <string name="day_wednesday_shortcut">St</string>
+    <string name="day_thursday_shortcut">St</string>
+    <string name="day_friday_shortcut">Pä</string>
+    <string name="day_saturday_shortcut">So</string>
+    <string name="day_sunday_shortcut">Ne</string>
+
 </resources>
