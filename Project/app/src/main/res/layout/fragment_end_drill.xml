@@ -49,7 +49,7 @@
             android:layout_height="184dp"
             android:background="@color/colorPrimaryDark"
 
-            app:layout_constraintTop_toBottomOf="@+id/end_drill_drill_end_relative_layout"
+            app:layout_constraintTop_toBottomOf="@+id/end_drill_answers_relative_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -165,13 +165,13 @@
             android:id="@+id/end_drill_answers_relative_layout"
             android:layout_width="match_parent"
             android:layout_height="184dp"
-            android:background="@color/colorPurple"
-            app:layout_constraintTop_toBottomOf="@id/end_drill_time_relative_layout"
+            android:background="@color/colorPeaGreen"
+            app:layout_constraintTop_toBottomOf="@id/end_drill_drill_end_relative_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -186,13 +186,33 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
 
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/end_drill_lightbulb_image_view"
+
                     android:text="@string/show_answers_after_test"
                     android:textColor="@color/colorWhite"
-                    android:textSize="48sp"
-                    android:gravity="center"
+                    android:textSize="40sp"
+                    android:gravity="end"
+
                     />
 
-            </RelativeLayout>
+                <ImageView
+                    android:id="@+id/end_drill_lightbulb_image_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/end_drill_show_answers"
+
+                    android:src="@drawable/ic_lightbulb_outline_white_104dp"
+
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -201,7 +221,7 @@
             android:layout_width="match_parent"
             android:layout_height="184dp"
             android:background="@color/colorPink"
-            app:layout_constraintTop_toBottomOf="@id/end_drill_answers_relative_layout"
+            app:layout_constraintTop_toBottomOf="@id/end_drill_time_relative_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 

@@ -8,11 +8,12 @@
     <TextView
         android:id="@+id/correct_answers_question_text_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="104dp"
 
         android:background="@color/colorPrimaryDark"
         android:textColor="@color/colorWhite"
         android:textSize="32sp"
+        android:gravity="center_vertical"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,11 +25,12 @@
     <TextView
         android:id="@+id/correct_answers_answer_text_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="104dp"
 
         android:background="@color/colorPrimary"
         android:textColor="@color/colorWhite"
         android:textSize="32sp"
+        android:gravity="center_vertical"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

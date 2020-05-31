@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         settingsIcon.setOnClickListener{
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 }

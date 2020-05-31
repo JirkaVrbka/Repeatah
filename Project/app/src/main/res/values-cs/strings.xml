@@ -33,7 +33,7 @@
     <string name="endString">Ukončit</string>
 
     <string name="daily_reminder_switch_name">Denná připomínka</string>
-    <string name="show_answers_after_test">Zobrazit odpovědi</string>
+    <string name="show_answers_after_test">Zobrazit\nodpovědi</string>
     <string name="statistics">Statistiky</string>
     <string name="statistics_correctness">Průměrná správnost odpovědí</string>
     <string name="statistics_average_speed">Průměrná rychlost</string>
@@ -55,10 +55,10 @@
     <string name="channelName">Repeatah</string>
     <string name="channelDescription">Repeatah notification</string>
     <string name="notificationTitle">Repeatah</string>
-    <string name="notificationDescription">Čo si skúsiť nový test?</string>
+    <string name="notificationDescription">Co takhle si skusit nový test?</string>
 
     <!-- Correct answers fragment   -->
-    <string name="correct_answers">Správné odpovědi</string>
+    <string name="correct_answers">Správné\nodpovědi</string>
 
     <!-- Statistics   -->
     <string name="day_monday_shortcut">Po</string>

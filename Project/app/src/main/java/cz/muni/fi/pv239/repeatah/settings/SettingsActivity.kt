@@ -30,6 +30,7 @@ class SettingsActivity : AppCompatActivity() {
         backIcon.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivityIfNeeded(intent, 0)
+            finish()
         }
     }
 

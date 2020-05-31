@@ -8,31 +8,69 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
-
-        <TextView
-            android:id="@+id/answers_label_text_view"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/correct_answer_relative_layout"
             android:layout_width="match_parent"
-            android:layout_height="104dp"
-            android:background="@color/colorPrimary"
-
-            android:text="@string/correct_answers"
-            android:textColor="@color/colorWhite"
-            android:textSize="48sp"
-            android:gravity="center"
+            android:layout_height="184dp"
+            android:background="@color/colorPeaGreen"
 
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+
+                <TextView
+                    android:id="@+id/answers_label_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/correct_answers"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="48sp"
+                    android:gravity="end"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/correct_answer_lightbulb_image_view"
+                    />
+
+                <ImageView
+                    android:id="@+id/correct_answer_lightbulb_image_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/answers_label_text_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+
+                    android:src="@drawable/ic_lightbulb_outline_white_104dp"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/answers_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            app:layout_constraintTop_toBottomOf="@id/answers_label_text_view"
+            app:layout_constraintTop_toBottomOf="@id/correct_answer_relative_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
@@ -56,28 +94,32 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
+            <ImageView
+                android:id="@+id/end_drill_answers_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+
+                android:src="@drawable/ic_arrow_back_white_64dp"
+                />
+
             <TextView
                 android:id="@+id/end_drill_answers_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
 
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="16dp"
+
+                android:layout_toEndOf="@id/end_drill_answers_image_view"
+
                 android:text="@string/back"
                 android:textColor="@color/colorWhite"
                 android:textSize="48sp"
-                android:gravity="center"
                 />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@id/end_drill_answers_text_view"
 
-                android:layout_marginStart="4dp"
-
-                android:src="@drawable/ic_arrow_back_white_64dp"
-                />
 
         </RelativeLayout>
 

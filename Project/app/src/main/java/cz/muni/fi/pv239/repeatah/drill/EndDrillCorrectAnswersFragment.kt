@@ -49,7 +49,7 @@ class EndDrillCorrectAnswersFragment : Fragment() {
         answers_recycler_view.adapter = adapter
 
 
-        end_drill_answers_text_view.setOnClickListener {
+        end_drill_finish_relative_layout.setOnClickListener {
             //Start new EndDrillFragment
             val endDrillFragment = EndDrillFragment()
             endDrillFragment.arguments = arguments
