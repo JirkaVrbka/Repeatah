@@ -42,7 +42,6 @@ class QuestionFragment: Fragment() {
     var numberOfCorrectAnswers = 0
 
     var savedQuestions : ArrayList<QuestionWithAnswers>? = null
-    var savedAnswers : ArrayList<Answer>? = null
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -52,7 +51,6 @@ class QuestionFragment: Fragment() {
         outState.putInt(QUESTION_POSITION, questionPosition)
         outState.putInt(NUMBER_OF_CORRECT_ANSWERS, numberOfCorrectAnswers)
         outState.putParcelableArrayList(QUESTIONS, savedQuestions)
-        outState.putParcelableArrayList(ANSWERS, savedAnswers)
 
         //Get current Chronometer time
         val currentTime = SystemClock.elapsedRealtime() - question_time_chronometer.base
@@ -83,8 +81,8 @@ class QuestionFragment: Fragment() {
         //Get saved data in case of screen rotation
         else{
             questions = savedInstanceState.getParcelableArrayList(QUESTIONS)
-            answers = savedInstanceState.getParcelableArrayList(ANSWERS)
             questionPosition = savedInstanceState.getInt(QUESTION_POSITION)
+            answers = questions?.get(questionPosition)?.answers?.shuffled()
             score = savedInstanceState.getInt(SCORE)
             timePassed = savedInstanceState.getLong(TIME_PASSED)
             numberOfCorrectAnswers = savedInstanceState.getInt(NUMBER_OF_CORRECT_ANSWERS)
@@ -92,7 +90,6 @@ class QuestionFragment: Fragment() {
 
         //Save data from Database in case of screen rotation
         savedQuestions = questions as ArrayList<QuestionWithAnswers>?
-        savedAnswers = answers as ArrayList<Answer>?
 
         val answerButtons = listOf(question_answer_one_button, question_answer_two_button,
             question_answer_three_button, question_answer_four_button)
